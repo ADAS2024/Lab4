@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                     flashcardanswer3.setVisibility(View.VISIBLE);
                     eyebutton.setImageResource(R.drawable.hide_icon);
                     isShowingAnswers = false;
-                } else if (!isShowingAnswers) {
+                } else {
                     flashcardanswer1.setVisibility(View.INVISIBLE);
                     flashcardanswer2.setVisibility(View.INVISIBLE);
                     flashcardanswer3.setVisibility(View.INVISIBLE);
