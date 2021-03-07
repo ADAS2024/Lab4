@@ -3,15 +3,19 @@ package com.example.arnabsflashcardapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 public class MainActivity extends AppCompatActivity {
     boolean isShowingAnswers = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +28,21 @@ public class MainActivity extends AppCompatActivity {
         TextView flashcardanswer1 = findViewById(R.id.flashcard_answer1);
         TextView flashcardanswer2 = findViewById(R.id.flashcard_answer2);
         TextView flashcardanswer3 = findViewById(R.id.flashcard_answer3);
-        ImageView eyebutton =  ((ImageView) findViewById(R.id.toggle_choices_visibility));
+        ImageView eyebutton =  (findViewById(R.id.toggle_choices_visibility));
+        ImageView plusbutton = (findViewById(R.id.newcard));
 
 
+
+        plusbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =  new Intent(MainActivity.this, AddCardActivityMain.class);
+                MainActivity.this.startActivityForResult(intent,100);
+            }
+        });
+
+
+        
         flashcardquestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,5 +109,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100) { // this 100 needs to match the 100 we used when we called startActivityForResult!
+            String question = data.getExtras().getString("string1"); // 'string1' needs to match the key we used when we put the string in the Intent
+            String answer = data.getExtras().getString("string2");
+
+            EditText flashcardquestion= (EditText) findViewById(R.id.editTextQuestion);
+            flashcardquestion.setText(question);
+            EditText flashcardanswer = (EditText) findViewById(R.id.editTextAnswer);
+            flashcardanswer.setText(answer);
+        }
     }
 }
