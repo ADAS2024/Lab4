@@ -118,9 +118,9 @@ public class MainActivity extends AppCompatActivity {
             String question = data.getExtras().getString("string1"); // 'string1' needs to match the key we used when we put the string in the Intent
             String answer = data.getExtras().getString("string2");
 
-            EditText flashcardquestion= (EditText) findViewById(R.id.editTextQuestion);
+            TextView flashcardquestion= findViewById(R.id.flashcard_question);
             flashcardquestion.setText(question);
-            EditText flashcardanswer = (EditText) findViewById(R.id.editTextAnswer);
+            TextView flashcardanswer = findViewById(R.id.flashcard_answer);
             flashcardanswer.setText(answer);
         }
     }
