@@ -17,6 +17,15 @@ public class AddCardActivityMain extends AppCompatActivity {
         ImageView cancelbutton = ((ImageView) findViewById(R.id.cancel));
         ImageView savebutton = ((ImageView) findViewById(R.id.save));
 
+
+        cancelbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelbutton.setVisibility(View.VISIBLE);
+                finish();
+            }
+        });
+
         savebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -30,12 +39,5 @@ public class AddCardActivityMain extends AppCompatActivity {
             }
         });
 
-        cancelbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cancelbutton.setVisibility(View.VISIBLE);
-                finish();
-            }
-        });
     }
 }
