@@ -39,8 +39,15 @@ public class MainActivity extends AppCompatActivity {
         ImageView nextbutton = (findViewById(R.id.nextbutton));
 
 
-        flashcardDatabase = new FlashcardDatabase(this);
+        flashcardDatabase = new FlashcardDatabase(getApplicationContext());
         allFlashcards = flashcardDatabase.getAllCards();
+
+        if (allFlashcards != null && allFlashcards.size() > 0) {
+            flashcardquestion.setText(allFlashcards.get(allFlashcards.size()-1).getQuestion());
+            flashcardanswer.setText(allFlashcards.get(allFlashcards.size()-1).getAnswer());
+        }
+
+
 
         nextbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,11 +75,6 @@ public class MainActivity extends AppCompatActivity {
                 ((TextView) findViewById(R.id.flashcard_question)).setText(flashcard.getQuestion());
             }
         });
-
-        if (allFlashcards != null && allFlashcards.size() > 0) {
-            ((TextView) findViewById(R.id.flashcard_question)).setText(allFlashcards.get(0).getQuestion());
-            ((TextView) findViewById(R.id.flashcard_answer)).setText(allFlashcards.get(0).getAnswer());
-        }
 
         plusbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,20 +157,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100 && data !=null) { // this 100 needs to match the 100 we used when we called startActivityForResult!
+        if (requestCode == 100 && resultCode == RESULT_OK) { // this 100 needs to match the 100 we used when we called startActivityForResult!
             String question = data.getExtras().getString("string1"); // 'string1' needs to match the key we used when we put the string in the Intent
             String answer = data.getExtras().getString("string2");
 
-            TextView flashcardquestion= findViewById(R.id.flashcard_question);
-            flashcardquestion.setText(question);
-            TextView flashcardanswer = findViewById(R.id.flashcard_answer);
-            flashcardanswer.setText(answer);
+            flashcardDatabase.insertCard(new Flashcard(question, answer));
+            allFlashcards = flashcardDatabase.getAllCards();
+
 
             ((TextView) findViewById(R.id.flashcard_question)).setText(question);
             ((TextView) findViewById(R.id.flashcard_answer)).setText(answer);
 
-            flashcardDatabase.insertCard(new Flashcard(question, answer));
-            allFlashcards = flashcardDatabase.getAllCards();
+
+
         }
     }
 }
