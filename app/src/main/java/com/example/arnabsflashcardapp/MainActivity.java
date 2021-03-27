@@ -23,10 +23,13 @@ public class MainActivity extends AppCompatActivity {
     List<Flashcard> allFlashcards;
     int currentCardDisplayedIndex = 0;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
 
         TextView flashcardquestion = findViewById(R.id.flashcard_question);
@@ -46,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
             flashcardquestion.setText(allFlashcards.get(allFlashcards.size()-1).getQuestion());
             flashcardanswer.setText(allFlashcards.get(allFlashcards.size()-1).getAnswer());
         }
+
+
 
 
 
@@ -81,6 +86,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent =  new Intent(MainActivity.this, AddCardActivityMain.class);
                 MainActivity.this.startActivityForResult(intent,100);
+
+                Intent i = new Intent(MainActivity.this, AddCardActivityMain.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
         });
 
@@ -160,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 100 && resultCode == RESULT_OK) { // this 100 needs to match the 100 we used when we called startActivityForResult!
             String question = data.getExtras().getString("string1"); // 'string1' needs to match the key we used when we put the string in the Intent
             String answer = data.getExtras().getString("string2");
+
 
             flashcardDatabase.insertCard(new Flashcard(question, answer));
             allFlashcards = flashcardDatabase.getAllCards();
